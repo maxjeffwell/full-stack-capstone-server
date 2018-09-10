@@ -12,7 +12,10 @@ const mongoose = require('mongoose');
 
 // DB setup
 
-mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/local', {
+    useNewUrlParser: true
+});
+mongoose.set('useCreateIndex', true);
 
 // App setup to get Express working the way we want it to
 
