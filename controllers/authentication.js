@@ -1,7 +1,12 @@
-const jwt = require('jsonwebtoken')
-
-
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const config = require('../config');
+
+
+function userToken(user) {
+    const timestamp = new Date ().getTime();
+    return jwt.sign({ sub: user.id, iat: timestamp }, config.secret);
+}
 
 exports.signup = function(req, res, next) {
 
@@ -36,7 +41,7 @@ exports.signup = function(req, res, next) {
             }
 
             // respond to request indicating the user was created
-            res.json({success: true});
+            res.json({ token: userToken(user) });
         });
     });
 }
