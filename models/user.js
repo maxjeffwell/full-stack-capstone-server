@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; // Schema is what we use to tell Mongoose about the particular fields our model is going to have
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcryptjs');
 
 // Define our model
 
