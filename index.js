@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const app = express(); // we're creating an instance of Express - the instance is our app.
 const router = require('./router');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // DB setup
 
@@ -22,7 +23,8 @@ mongoose.set('useCreateIndex', true);
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
 
 app.use(morgan('combined')); // Logging framework for logging incoming requests
-app.use(bodyParser.json({type: '*/*'})); // Parses incoming requests into json (no matter what the request type is)
+app.use(cors()); // Will make our Express app accept requests from any domain/subdomain/port - the "just let it happen" approach
+app.use(bodyParser.json()); // Parses incoming requests into json
 router(app);
 
 // Server setup to get our Express app to talk to the outside world
