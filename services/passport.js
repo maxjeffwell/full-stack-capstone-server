@@ -5,9 +5,41 @@
 const passport = require('passport');
 const User = require('../models/user');
 const config = require('../config');
+
 const JwtStrategy = require('passport-jwt').Strategy; // method for authenticating a user (this strategy validates a user with a JWT)
 
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local');
+
+// Create local strategy
+
+const localOptions = { usernameField: 'email' };
+const localLogin = new LocalStrategy(localOptions, function(email, password, done) {
+
+    // Verify username and password, call done with the user if it is the correct username and password
+    // otherwise call done with false
+
+    User.findOne({ email: email }, function(err, user) {
+        if (err) {
+            return done(err);
+        }
+        if (!user) {
+            return done(null, false);
+        }
+        // compare passwords - is `password` === user.password ?
+        // have to compare a plaintext password with an encrypted password
+
+        user.comparePassword(password, function(err, isMatch) {
+            if (err) {
+                return done(err);
+            }
+            if (!isMatch) {
+                return done(null, false);
+            }
+            return done(null, user);
+        });
+    });
+});
 
 // Set up options for JWT Strategy
 
@@ -23,6 +55,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
     // When we get the payload back it is going to be the user Id and timestamp that was encoded when we created userToken (will   have subject property and issuedAt property)
     // done is a callback function we call when we're able to successfully authenticate the user
     // See if the user ID in the payload exists in the database. If it does, call 'done'. Otherwise, call 'done' without a user object
+
     User.findById(payload.sub, function (err, user) {
         if (err) {
             return done(err, false); // search failed to occur
@@ -38,6 +71,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 // Tell Passport to use the Strategy
 
 passport.use(jwtLogin);
+passport.use(localLogin);
 
 
 
