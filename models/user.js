@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema; // Schema is what we use to tell Mongoose about the particular fields our model is going to have
+
 const bcrypt = require('bcryptjs');
 
 // Define our model
@@ -13,6 +14,7 @@ const userSchema = new Schema ({
 
 // On Save Hook, encrypt password
 // before saving model, run this function
+
 userSchema.pre('save', function (next) {
     const user = this; // get access to user model; user is an instance of the user model at this point
 
@@ -37,6 +39,14 @@ userSchema.pre('save', function (next) {
         });
     });
 });
+
+userSchema.methods.comparePassword = function(candidatePassword, callback) {
+    bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+        if (err) {
+           return callback(err);
+        } callback(null, isMatch);
+    });
+}
 
 
 // Create the model class (what we're going to use to create new users) - represents all users, not just a particular user
