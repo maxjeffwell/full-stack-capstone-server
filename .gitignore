@@ -1,5 +1,12 @@
 node_modules
-config.js
+
+# dotenv environment variables file
+.env
+
+
+
+
+
 <<<<<<< Updated upstream
 
 \.idea/
