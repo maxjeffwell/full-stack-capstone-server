@@ -9,10 +9,14 @@ const morgan = require('morgan');
 const app = express(); // we're creating an instance of Express - the instance is our app.
 const router = require('./router');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+// load values from the .env file in this directory into process.env
+dotenv.load();
 
 // DB setup
 
-mongoose.connect('mongodb://localhost:27017/local', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/local', {
     useNewUrlParser: true
 });
 mongoose.set('useCreateIndex', true);
