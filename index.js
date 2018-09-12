@@ -1,4 +1,4 @@
-// This is our index.js file. It is the main starting point of our application and will be the first thing to execute when the server starts (i.e. server initialization).
+// Main starting point of our application and will be first thing to execute when the server starts (i.e. server initialization).
 
 // require statements are how we're going to be doing code sharing between files
 
