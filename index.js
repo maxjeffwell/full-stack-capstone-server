@@ -27,9 +27,9 @@ router(app);
 
 // Server setup to get our Express app to talk to the outside world
 
-const port = process.env.PORT || 8080; // If there is an environment variable of PORT already defined, we'll use it. If not, we'll use 8080
+const PORT = process.env.PORT || 8080; // If there is an environment variable of PORT already defined, we'll use it. If not, we'll use 8080
 const server = http.createServer(app); // http library is a native node library that says create an http server that knows how to receive requests and anything that comes in should be forwarded to our Express app.
-server.listen(port);
+server.listen(PORT);
 
 console.log('Server listening on:', port);
 
