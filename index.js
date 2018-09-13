@@ -32,7 +32,7 @@ app.use(cors()); // Will make our Express app accept requests from any domain/su
 app.use(bodyParser.json()); // Parses incoming requests into json
 // Create a static webserver
 // app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'client/build'))); // production build creates /build directory and we need to tell Express to use it
+app.use(express.static(path.join(__dirname, './client/build'))); // production build creates /build directory and we need to tell Express to use it
 router(app);
 
 // Server setup to get our Express app to talk to the outside world

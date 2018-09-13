@@ -15,6 +15,6 @@ module.exports = function(app) { // Inside this function we have access to our E
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname+'/client/build/index.html'));
+        res.sendFile(path.join(__dirname+'./client/build/index.html'));
     });
 }
