@@ -11,6 +11,7 @@ const router = require('./router');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const path=require('path');
 
 // load values from the .env file in this directory into process.env
 dotenv.load();
@@ -31,7 +32,7 @@ app.use(cors()); // Will make our Express app accept requests from any domain/su
 app.use(bodyParser.json()); // Parses incoming requests into json
 // Create a static webserver
 // app.use(express.static('public'));
-app.use(express.static( `${__dirname}/../build`)); // production build creates /build directory and we need to tell Express to use it
+app.use(express.static(path.join(__dirname, 'client/build'))); // production build creates /build directory and we need to tell Express to use it
 router(app);
 
 // Server setup to get our Express app to talk to the outside world
