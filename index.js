@@ -30,7 +30,7 @@ app.use(morgan('combined')); // Logging framework for logging incoming requests
 app.use(cors()); // Will make our Express app accept requests from any domain/subdomain/port - the "just let it happen" approach
 app.use(bodyParser.json()); // Parses incoming requests into json
 // Create a static webserver
-app.use(express.static('public'))
+app.use(express.static('public'));
 router(app);
 
 // Server setup to get our Express app to talk to the outside world
