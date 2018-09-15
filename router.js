@@ -1,6 +1,7 @@
 const Authentication = require('./controllers/authentication');
-const passportConfig = require('./services/passport');
+// const passportConfig = require('./services/passport');
 const passport = require('passport');
+const path = require('path');
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
@@ -10,7 +11,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function(app) { // Inside this function we have access to our Express app
     app.get('/', requireAuth, function(req, res) {
-        res.json({ hello: 'you' });
+        res.json({ Hey: 'You' });
     });
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
