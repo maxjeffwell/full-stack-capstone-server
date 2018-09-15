@@ -67,9 +67,7 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
     });
 });
 
-
 // Tell Passport to use the Strategy
-
 passport.use(jwtLogin);
 passport.use(localLogin);
 
