@@ -2,14 +2,12 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { JWT_SECRET } = require('../config')
 
-
-
 function userToken(user) {
     const timestamp = new Date ().getTime();
     return jwt.sign({ sub: user.id, iat: timestamp }, JWT_SECRET );
 }
 
-exports.signin = function(req, res, next) {
+exports.signin = function(req, res,) {
 
     // User has had their email and pw authorized, we just need to give them a token
 
@@ -20,7 +18,6 @@ exports.signup = function(req, res, next) {
 
     const email = req.body.email;
     const password = req.body.password;
-    console.log(req.body);
 
     if (!email || !password) {
         return res.status(422).send({ error: 'You must provide email and password' });
@@ -28,30 +25,29 @@ exports.signup = function(req, res, next) {
 
     // See if a user with the given email exists
 
-    User.findOne({email: email}, function (err, existingUser) {
+    User.findOne({email: email}, function (err, existingUser) { //using callback instead of promise
         console.log(err, existingUser);
         if (err) {
             return next(err);
-
         }
 
-        // If a user with email does exist, return an error
+        // If email does exist, return an error
 
         if (existingUser) {
             return res.status(422)
-                .send({ error: 'Email is in use'});
+                .send({ error: 'Email already registered'});
         }
 
-        // If a user with email does not exist, create and save user record
+        // If email does not exist, create and save user record
 
-        const user = new User({
+        const newUser = new User({
             email: email,
             password: password
         });
 
-        // save record to the database
+        // save record to database
 
-        user.save(function (err) {
+        newUser.save(function (err) {
             if (err) {
                 return next(err);
             }
