@@ -7,7 +7,7 @@ function userToken(user) {
     return jwt.sign({ sub: user.id, iat: timestamp }, JWT_SECRET );
 }
 
-exports.signin = function(req, res,) {
+exports.signin = function(req, res, next) {
 
     // User has had their email and pw authorized, we just need to give them a token
 
@@ -35,7 +35,7 @@ exports.signup = function(req, res, next) {
 
         if (existingUser) {
             return res.status(422)
-                .send({ error: 'Email already registered'});
+                .send({ error: 'Email already registered' });
         }
 
         // If email does not exist, create and save user record
@@ -54,11 +54,8 @@ exports.signup = function(req, res, next) {
 
             // respond to request indicating the user was created
 
-            res.json({ token: userToken(user) });
+            res.json({ token: userToken(newUser) });
         });
     });
 }
 
-// exports.students = function (req, res, next) {
-//     Student.findOne
-// }
