@@ -58,3 +58,7 @@ exports.signup = function(req, res, next) {
         });
     });
 }
+
+// exports.students = function (req, res, next) {
+//     Student.findOne
+// }

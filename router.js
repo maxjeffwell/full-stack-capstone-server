@@ -1,6 +1,6 @@
 const Authentication = require('./controllers/authentication');
 const passport = require('passport');
-const path = require('path');
+// const path = require('path');
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
@@ -10,11 +10,17 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function(app) { // Inside this function we have access to our Express app
     app.get('/', requireAuth, function(req, res) {
-        res.json({ Hey: 'You' });
+        res.send('GET request to homepage');
     });
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname+'./client/build/index.html'));
-    });
+    // app.get('*', (req, res) => {
+    //     res.sendFile(path.join(dirname+'../.client/build/index.html'));
+    // });
+
+    app.get('/students', requireAuth, function(req, res) {
+
+    })
+
+
 }

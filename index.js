@@ -4,9 +4,13 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const app = express(); // we're creating an instance of Express - the instance is our app.
+const app = express(); // create an instance of Express - the instance is our app.
 const router = require('./router');
+
 const mongoose = require('mongoose');
+require('./services/passport');
+require('./models/student');
+require('./models/user');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const path=require('path');
@@ -22,20 +26,19 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/local', {
 });
 mongoose.set('useCreateIndex', true);
 
-// App setup to get Express working the way we want it to
-
+// App setup to get Express working
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
 
 app.use(morgan('combined')); // Logging framework for logging incoming requests
 app.use(cors()); // Will make our Express app accept requests from any domain/subdomain/port
-app.use(bodyParser.json()); // Parses incoming requests into json
-
+app.use(bodyParser.json( { type: '*/*' })); // Parses incoming requests into json
+router(app);
 // Create a static webserver
 
-app.use(express.static(path.join(__dirname, './client/build'))); // production build creates /build directory and we need to tell Express to use it
+app.use(express.static(path.join(__dirname, '.././client/build'))); // production build creates /build directory and we need to tell Express to use it
 router(app);
 
-// Server setup to get our Express app to talk to the outside world
+// Server setup to get Express app to talk to the outside world
 
 const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);
