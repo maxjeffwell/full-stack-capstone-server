@@ -14,13 +14,18 @@ module.exports = function(app) { // Inside this function we have access to our E
     });
     app.post('/signin', requireSignin, Authentication.signin);
     app.post('/signup', Authentication.signup);
+
+
     // app.get('*', (req, res) => {
     //     res.sendFile(path.join(dirname+'../.client/build/index.html'));
     // });
 
-    app.get('/students', requireAuth, function(req, res) {
+    // app.get('/api/students', requireAuth,  {
+    //
+    // });
 
-    })
-
-
+    app.get('/logout', (req, res) => {
+        req.logout();
+        res.redirect('/');
+    });
 }
