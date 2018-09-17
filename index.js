@@ -13,7 +13,7 @@ require('./models/student');
 require('./models/user');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const path=require('path');
+// const path=require('path');
 
 // load values from the .env file in this directory into process.env
 
@@ -21,7 +21,7 @@ dotenv.load();
 
 // DB setup
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/local', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/local', {
     useNewUrlParser: true
 });
 mongoose.set('useCreateIndex', true);
@@ -35,8 +35,7 @@ app.use(bodyParser.json( { type: '*/*' })); // Parses incoming requests into jso
 router(app);
 // Create a static webserver
 
-app.use(express.static(path.join(__dirname, '.././client/build'))); // production build creates /build directory and we need to tell Express to use it
-router(app);
+// app.use(express.static(path.join(__dirname, '.././client/build'))); // production build creates /build directory and we need to tell Express to use it
 
 // Server setup to get Express app to talk to the outside world
 
@@ -47,7 +46,7 @@ server.listen(PORT);
 
 console.log('Server listening on:', PORT);
 
-module.exports = app;
+// module.exports = app;
 
 // Next: set up server to handle routes and respond with json data - i.e. add route handlers to Express app in router.js
 
