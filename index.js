@@ -30,7 +30,7 @@ mongoose.set('useCreateIndex', true);
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
 
 app.use(morgan('combined')); // Logging framework for logging incoming requests
-app.use(cors()); // Will make our Express app accept requests from any domain/subdomain/port
+app.use(cors()); // Will make Express app accept requests from any domain/subdomain/port
 app.use(bodyParser.json( { type: '*/*' })); // Parses incoming requests into json
 router(app);
 // Create a static webserver
