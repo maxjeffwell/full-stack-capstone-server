@@ -24,7 +24,9 @@ module.exports = function(app) { // Inside this function we have access to our E
         res.redirect('/');
     });
 
-    app.get('/students', requireAuth, function (req, res) {
+    // to do - re enable authentication on students route
+
+    app.get('/students', function (req, res) {
         Student.find({})
             .then((result) => {
                 res.json(result);
