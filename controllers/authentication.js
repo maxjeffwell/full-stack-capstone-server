@@ -7,7 +7,7 @@ function userToken(user) {
     return jwt.sign({ sub: user.id, iat: timestamp }, JWT_SECRET );
 }
 
-exports.signin = function(req, res, next) {
+exports.signin = function(req, res) {
 
     // User has had their email and pw authorized, we just need to give them a token
 
