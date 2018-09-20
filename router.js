@@ -24,6 +24,9 @@ module.exports = function(app) { // Inside this function we have access to our E
         res.redirect('/');
     });
 
+    app.get("/whoami", requireAuth, (req, res) => res.json(req.user));
+
+
     // to do - re enable authentication on students route
 
     app.get('/students', function (req, res) {
@@ -35,6 +38,17 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
+
+    app.get('/students/:id', function (req, res) {
+        Student.findById(req.params.id)
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+            });
+    });
+
 
     app.put('/students/:id', (req, res) => {
 
@@ -48,8 +62,9 @@ module.exports = function(app) { // Inside this function we have access to our E
             active: req.body.active,
             designation: req.body.designation
         };
-
-        Student.findOneAndUpdate({_id: req.params.id}, updatedStudent, {context: 'query'})
+        console.log(updatedStudent);
+        console.log(req.params.id);
+        Student.findOneAndUpdate({_id: req.params.id}, updatedStudent)
             .then((oldResult) => {
                 Student.findOne({_id: req.params.id})
                     .then((newResult) => {

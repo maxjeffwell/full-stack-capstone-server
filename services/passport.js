@@ -44,7 +44,7 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 // Set up options for JWT Strategy
 
 const jwtOptions = { // have to tell JWT strategy where to look on request in order to find this key or secret
-    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     secretOrKey: JWT_SECRET
 };
 
@@ -58,11 +58,18 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
 
     // See if the user ID in the payload exists in the database. If it does, call 'done'. Otherwise, call 'done' without a user object
 
+    console.log(payload);
+
+
     User.findById(payload.sub, function (err, user) {
         if (err) {
             return done(err, false); // search failed to occur
-        } if (user) {
+        }if (user) {
+            delete user.password;
+             console.log(user);
+            //
             done(null, user); // search occurred and found a user
+
         } else {
             done(null, false); // search occurred but we couldn't find a user (person is not authenticated)
         }
