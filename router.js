@@ -27,9 +27,9 @@ module.exports = function(app) { // Inside this function we have access to our E
     app.get("/whoami", requireAuth, (req, res) => res.json(req.user));
 
 
-    // to do - re enable authentication on students route
+    // to do - re enable authentication on students route - CURRENTLY ENABLED
 
-    app.get('/students', function (req, res) {
+    app.get('/students', requireAuth, function (req, res) {
         Student.find({})
             .then((result) => {
                 res.json(result);

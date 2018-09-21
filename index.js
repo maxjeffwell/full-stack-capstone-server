@@ -1,10 +1,10 @@
-// Main starting point of our application and will be first thing to execute when the server starts
+// Main starting point of application and first thing to execute when server starts
 
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const app = express(); // create an instance of Express - the instance is our app.
+const app = express(); // create an instance of Express - the instance is the app.
 const router = require('./router');
 
 const mongoose = require('mongoose');
@@ -13,7 +13,6 @@ require('./models/student');
 require('./models/user');
 const dotenv = require('dotenv');
 const cors = require('cors');
-// const path=require('path');
 
 // load values from the .env file in this directory into process.env
 
@@ -35,20 +34,21 @@ app.use(cors()); // Will make Express app accept requests from any domain/subdom
 app.use(bodyParser.json()); // Parses incoming requests into json
 router(app);
 
-// Create a static webserver
+// Create a static server
 
 // production build creates /build directory and we need to tell Express to use it
 
 // Server setup to get Express app to talk to the outside world
 
 if (process.env.NODE_ENV === 'production') {
+
     // Express will serve up production assets
-    // like our main.js file, or main.css file!
+
     app.use(express.static('client/build'));
 
 
-    // Express will serve up the index.html file
-    // if it doesn't recognize the route
+    // Express will serve up the index.html file if it doesn't recognize the route
+
     const path = require('path');
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
@@ -62,7 +62,5 @@ server.listen(PORT);
 
 console.log('Server listening on:', PORT);
 
-// module.exports = app;
-
-// Next: set up server to handle routes and respond with json data - i.e. add route handlers to Express app in router.js
+// Next: add route handlers to Express app in router.js and configure to serve JSON
 

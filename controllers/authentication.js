@@ -9,7 +9,7 @@ function userToken(user) {
 
 exports.signin = function(req, res) {
 
-    // User has had their email and pw authorized, we just need to give them a token
+    // User has had their email and password authorized, give them a token
 
     res.json({ token: userToken(req.user) });
 }
@@ -20,7 +20,7 @@ exports.signup = function(req, res, next) {
     const password = req.body.password;
 
     if (!email || !password) {
-        return res.status(422).send({ error: 'You must provide email and password' });
+        return res.status(422).send({ error: 'You must provide an email and password' });
     }
 
     // See if a user with the given email exists
