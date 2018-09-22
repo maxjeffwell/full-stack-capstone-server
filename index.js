@@ -1,6 +1,7 @@
 // Main starting point of application and first thing to execute when server starts
 
 const express = require('express');
+const cors = require('cors');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -12,7 +13,7 @@ require('./services/passport');
 require('./models/student');
 require('./models/user');
 const dotenv = require('dotenv');
-const cors = require('cors');
+
 
 // load values from the .env file in this directory into process.env
 
