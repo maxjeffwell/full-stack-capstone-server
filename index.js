@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express(); // create an instance of Express - the instance is the app.
 const router = require('./router');
+const { PORT, CLIENT_ORIGIN } = require('./config');
 
 const mongoose = require('mongoose');
 require('./services/passport');
@@ -31,9 +32,17 @@ mongoose.set('useCreateIndex', true);
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
 
 app.use(morgan('combined')); // Logging framework for logging incoming requests
-app.use(cors()); // Will make Express app accept requests from any domain/subdomain/port
 app.use(bodyParser.json()); // Parses incoming requests into json
 router(app);
+
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+);
+
+
+
 
 // Create a static server
 
@@ -56,7 +65,6 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-const PORT = process.env.PORT || 8080;
 const server = http.createServer(app);
 
 server.listen(PORT);
