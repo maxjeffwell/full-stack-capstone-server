@@ -39,7 +39,7 @@ module.exports = function(app) { // Inside this function we have access to our E
             });
     });
 
-    app.get('/students/:id/update', function (req, res) {
+    app.get('/students/:id', function (req, res) {
         Student.findById(req.params.id)
             .then((result) => {
                 res.json(result);
@@ -50,7 +50,7 @@ module.exports = function(app) { // Inside this function we have access to our E
     });
 
 
-    app.put('/students/:id', (req, res) => {
+    app.put('/students/:id/update', (req, res) => {
 
         let updatedStudent = {
             fullName: req.body.fullName,
