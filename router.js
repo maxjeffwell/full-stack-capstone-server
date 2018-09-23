@@ -50,7 +50,7 @@ module.exports = function(app) { // Inside this function we have access to our E
     });
 
 
-    app.put('/students/:id/update', (req, res) => {
+    app.put('/students/:id/', (req, res) => {
 
         let updatedStudent = {
             fullName: req.body.fullName,
