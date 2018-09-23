@@ -39,16 +39,36 @@ module.exports = function(app) { // Inside this function we have access to our E
             });
     });
 
-    app.get('/students/:id', function (req, res) {
-        Student.findById(req.params.id)
-            .then((result) => {
-                res.json(result);
-            })
-            .catch((err) => {
-                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
-            });
-    });
-
+//     app.get('/students/:id', function (req, res) {
+//         Student.findById(req.params.id)
+//             .then((result) => {
+//                 res.json(result);
+//             })
+//             .catch((err) => {
+//                 res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+//             });
+//     });
+    
+    app.get('/students/:id', (req, res, next) => {
+    const { id } = req.params;
+ 
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+      const err = new Error('The `id` is not valid');
+      err.status = 400;
+      return next(err);
+    }
+    Student.findOne({ _id: id})  
+    .then(result => {
+        if (result) {
+          res.json(result);
+        } else {
+          next();
+        }
+      })
+      .catch(err => {
+        next(err);
+      });
+  });
 
     app.put('/students/:id/', (req, res) => {
 
