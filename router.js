@@ -39,7 +39,7 @@ module.exports = function(app) { // Inside this function we have access to our E
             });
     });
 
-    app.get('/students/:id', function (req, res) {
+    app.get('/students/:id/update', function (req, res) {
         Student.findById(req.params.id)
             .then((result) => {
                 res.json(result);
