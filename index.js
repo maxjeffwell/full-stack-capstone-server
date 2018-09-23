@@ -35,11 +35,14 @@ app.use(morgan('combined')); // Logging framework for logging incoming requests
 app.use(bodyParser.json()); // Parses incoming requests into json
 router(app);
 
-app.use(
-  cors({
-    origin: CLIENT_ORIGIN
-  })
-);
+
+const corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
 
 
 
