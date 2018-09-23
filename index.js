@@ -33,19 +33,24 @@ mongoose.set('useCreateIndex', true);
 
 app.use(morgan('combined')); // Logging framework for logging incoming requests
 app.use(bodyParser.json()); // Parses incoming requests into json
+
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
+  if (req.method === 'OPTIONS') {
+    return res.send(204);
+  }
+  next();
+});
+
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+);
+
 router(app);
-
-
-const corsOption = {
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  exposedHeaders: ['x-auth-token']
-};
-app.use(cors(corsOption));
-
-
-
 
 // Create a static server
 
