@@ -49,7 +49,7 @@ module.exports = function(app) { // Inside this function we have access to our E
 //             });
 //     });
     
-    app.get('/students/:id', (req, res, next) => {
+    app.get('/students/:id', requireAuth, function (req, res, next) {
     const { id } = req.params;
  
       if (!mongoose.Types.ObjectId.isValid(id)) {
