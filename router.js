@@ -48,16 +48,16 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
-    
+
 //     app.get('/students/:id', requireAuth, function (req, res, next) {
 //     const { id } = req.params;
- 
+
 //       if (!mongoose.Types.ObjectId.isValid(id)) {
 //       const err = new Error('The `id` is not valid');
 //       err.status = 400;
 //       return next(err);
 //     }
-//     Student.findOne({ _id: id})  
+//     Student.findOne({ _id: id})
 //     .then(result => {
 //         if (result) {
 //           res.json(result);
