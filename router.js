@@ -26,9 +26,6 @@ module.exports = function(app) { // Inside this function we have access to our E
 
     app.get("/whoami", requireAuth, (req, res) => res.json(req.user));
 
-
-    // to do - re enable authentication on students route - CURRENTLY ENABLED
-
     app.get('/students', requireAuth, function (req, res) {
         Student.find({})
             .then((result) => {
@@ -48,16 +45,16 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
-    
+
 //     app.get('/students/:id', requireAuth, function (req, res, next) {
 //     const { id } = req.params;
- 
+
 //       if (!mongoose.Types.ObjectId.isValid(id)) {
 //       const err = new Error('The `id` is not valid');
 //       err.status = 400;
 //       return next(err);
 //     }
-//     Student.findOne({ _id: id})  
+//     Student.findOne({ _id: id})
 //     .then(result => {
 //         if (result) {
 //           res.json(result);
@@ -102,15 +99,11 @@ module.exports = function(app) { // Inside this function we have access to our E
                                 designation: newResult.designation
                             }
                         });
-                    })
-
-                    .catch((err) => {
+                    }).catch((err) => {
                         console.error(err);
                         res.status(500).json({success: false});
-                        return;
                     });
-            })
-            .catch((err) => {
+            }).catch((err) => {
                 if (err.errors) {
                     if (err.errors.school) {
                         res.status(400).json({success: false, msg: err.errors.school.message});
@@ -129,9 +122,8 @@ module.exports = function(app) { // Inside this function we have access to our E
 
                     }
                 }
-
             });
     });
-}
+};
 
 
