@@ -1,23 +1,23 @@
-const Authentication = require('./controllers/authentication');
-const passport = require('passport');
+import { Signin, Signup } from './controllers/authentication';
+import passport from 'passport';
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
-const Student = require('./models/student');
+import Student from './models/student';
 
 const requireAuth = passport.authenticate('jwt', { session: false }); // When a user is authenticated don't try to create a session for them (by default, Passport tries to make a cookie-based session for the request - we're using tokens)
 
 const requireSignin = passport.authenticate('local', { session: false });
 
-module.exports = function(app) { // Inside this function we have access to our Express app
+export const Router = function(app) { // Inside this function we have access to our Express app
 
     app.get('/', requireAuth, function (req, res) {
         res.send('GET request to homepage');
     });
 
-    app.post('/signin', requireSignin, Authentication.signin);
+    app.post('/signin', requireSignin, Signin);
 
-    app.post('/signup', Authentication.signup);
+    app.post('/signup', Signup);
 
     app.get('/logout', (req, res) => {
         req.logout();
@@ -26,16 +26,13 @@ module.exports = function(app) { // Inside this function we have access to our E
 
     app.get("/whoami", requireAuth, (req, res) => res.json(req.user));
 
-
-    // to do - re enable authentication on students route - CURRENTLY ENABLED
-
     app.get('/students', requireAuth, function (req, res) {
         Student.find({})
             .then((result) => {
                 res.json(result);
             })
             .catch((err) => {
-                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
 
@@ -45,7 +42,7 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.json(result);
             })
             .catch((err) => {
-                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
 
@@ -82,8 +79,7 @@ module.exports = function(app) { // Inside this function we have access to our E
             active: req.body.active,
             designation: req.body.designation
         };
-        console.log(updatedStudent);
-        console.log(req.params.id);
+
         Student.findOneAndUpdate({_id: req.params.id}, updatedStudent)
             .then((oldResult) => {
                 Student.findOne({_id: req.params.id})
@@ -102,36 +98,31 @@ module.exports = function(app) { // Inside this function we have access to our E
                                 designation: newResult.designation
                             }
                         });
-                    })
-
-                    .catch((err) => {
+                    }).catch((err) => {
                         console.error(err);
-                        res.status(500).json({success: false});
-                        return;
+                        res.sendStatus(500).json({success: false});
                     });
-            })
-            .catch((err) => {
+            }).catch((err) => {
                 if (err.errors) {
                     if (err.errors.school) {
-                        res.status(400).json({success: false, msg: err.errors.school.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.school.message});
                         return;
                     }
                     if (err.errors.teacher) {
-                        res.status(400).json({success: false, msg: err.errors.teacher.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.teacher.message});
                         return;
                     }
                     if (err.errors.gradeLevel) {
-                        res.status(400).json({success: false, msg: err.errors.gradeLevel.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.gradeLevel.message});
                         return;
                     }
                     if (err.errors.ellStatus) {
-                        res.status(400).json({success: false, msg: err.errors.ellStatus.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.ellStatus.message});
 
                     }
                 }
-
             });
     });
-}
+};
 
 

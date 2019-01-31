@@ -2,14 +2,13 @@
 
 // Answer question "is our user logged in?" before they hit the authentication controller
 
-const passport = require('passport');
-const User = require('../models/user');
-const { JWT_SECRET } = require('../config')
+import passport from 'passport';
+import User from'../models/user';
 
-const JwtStrategy = require('passport-jwt').Strategy; // this strategy validates a user with a JWT
+// import JwtStrategy from'passport-jwt'; // this strategy validates a user with a JWT
 
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const LocalStrategy = require('passport-local');
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import LocalStrategy from 'passport-local';
 
 // Create local strategy
 
@@ -45,12 +44,12 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 
 const jwtOptions = { // have to tell JWT strategy where to look on request in order to find this key or secret
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
-    secretOrKey: JWT_SECRET
-};
+    secretOrKey: process.env.JWT_SECRET,
+}
 
 // Create JWT Strategy
 
-const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
+const jwtLogin = new Strategy(jwtOptions, function(payload, done) {
 
     // When we get the payload back it is going to be the user Id and timestamp that was encoded when we created userToken (will   have subject property and issuedAt property)
 

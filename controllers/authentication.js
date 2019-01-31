@@ -1,26 +1,25 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const { JWT_SECRET } = require('../config')
+import jwt from 'jsonwebtoken';
+import User from '../models/user';
 
 function userToken(user) {
     const timestamp = new Date ().getTime();
-    return jwt.sign({ sub: user.id, iat: timestamp }, JWT_SECRET );
+    return jwt.sign({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET );
 }
 
-exports.signin = function(req, res) {
+export const Signin = function(req, res) {
 
     // User has had their email and password authorized, give them a token
 
     res.json({ token: userToken(req.user) });
 }
 
-exports.signup = function(req, res, next) {
+export const Signup = function(req, res, next) {
 
     const email = req.body.email;
     const password = req.body.password;
 
     if (!email || !password) {
-        return res.status(422).send({ error: 'You must provide an email and password' });
+        return res.sendStatus(422).send({ error: 'You must provide an email and password' });
     }
 
     // See if a user with the given email exists
@@ -34,7 +33,7 @@ exports.signup = function(req, res, next) {
         // If email does exist, return an error
 
         if (existingUser) {
-            return res.status(422)
+            return res.sendStatus(422)
                 .send({ error: 'Email already registered' });
         }
 
