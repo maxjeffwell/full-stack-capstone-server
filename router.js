@@ -32,7 +32,7 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.json(result);
             })
             .catch((err) => {
-                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
 
@@ -42,7 +42,7 @@ module.exports = function(app) { // Inside this function we have access to our E
                 res.json(result);
             })
             .catch((err) => {
-                res.status(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
 
@@ -79,8 +79,7 @@ module.exports = function(app) { // Inside this function we have access to our E
             active: req.body.active,
             designation: req.body.designation
         };
-        console.log(updatedStudent);
-        console.log(req.params.id);
+
         Student.findOneAndUpdate({_id: req.params.id}, updatedStudent)
             .then((oldResult) => {
                 Student.findOne({_id: req.params.id})
@@ -101,24 +100,24 @@ module.exports = function(app) { // Inside this function we have access to our E
                         });
                     }).catch((err) => {
                         console.error(err);
-                        res.status(500).json({success: false});
+                        res.sendStatus(500).json({success: false});
                     });
             }).catch((err) => {
                 if (err.errors) {
                     if (err.errors.school) {
-                        res.status(400).json({success: false, msg: err.errors.school.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.school.message});
                         return;
                     }
                     if (err.errors.teacher) {
-                        res.status(400).json({success: false, msg: err.errors.teacher.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.teacher.message});
                         return;
                     }
                     if (err.errors.gradeLevel) {
-                        res.status(400).json({success: false, msg: err.errors.gradeLevel.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.gradeLevel.message});
                         return;
                     }
                     if (err.errors.ellStatus) {
-                        res.status(400).json({success: false, msg: err.errors.ellStatus.message});
+                        res.sendStatus(400).json({success: false, msg: err.errors.ellStatus.message});
 
                     }
                 }
