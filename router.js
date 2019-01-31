@@ -1,23 +1,23 @@
-const Authentication = require('./controllers/authentication');
-const passport = require('passport');
+import { Signin, Signup } from './controllers/authentication';
+import passport from 'passport';
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
-const Student = require('./models/student');
+import Student from './models/student';
 
 const requireAuth = passport.authenticate('jwt', { session: false }); // When a user is authenticated don't try to create a session for them (by default, Passport tries to make a cookie-based session for the request - we're using tokens)
 
 const requireSignin = passport.authenticate('local', { session: false });
 
-module.exports = function(app) { // Inside this function we have access to our Express app
+export const Router = function(app) { // Inside this function we have access to our Express app
 
     app.get('/', requireAuth, function (req, res) {
         res.send('GET request to homepage');
     });
 
-    app.post('/signin', requireSignin, Authentication.signin);
+    app.post('/signin', requireSignin, Signin);
 
-    app.post('/signup', Authentication.signup);
+    app.post('/signup', Signup);
 
     app.get('/logout', (req, res) => {
         req.logout();
