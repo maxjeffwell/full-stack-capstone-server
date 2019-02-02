@@ -1,2 +1,15 @@
 language: node_js
 node_js: node
+cache:
+  directories:
+    - node_modules
+env:
+  - CI=true
+deploy:
+  provider: heroku
+  edge: true
+  api_key:
+    secure: wcjmTZ8WoIA306x/Pfn4mVjVvnxD3m/vprqm061ICm5ROhVXuMtWyOWIfKD7dhJjznxJmtOhzxGYrJ3ICpvgnoDDZDkEuZwXFcu9MFjyX2Dm/2i+9b3C6wXhTGUiuj5TDGrbCWoe2nIfvaQ9npwezw3g5d4npN9X1jbV9FTA35m1UoXBIThgM6/6WvKmyINaMOih0yGw2EcB3pWpEYu4aU+Sdo1b8g2O29K5Jnaa3pga1nvxsadqUW+HARPkn5pT9Bt6ya+DDyz7O3JQ3yDeoxdslc++RILKT/mKMxmAFjtvCkZr7QaADtLtMHMDlF1TOUSpZPZxNv5YifcOHgdvVuimqjgk7wdHuE0Tn3XUaBcBzwxn1gOTB/eljEIJnVH/VioB1z/TEIgj0DFOQee7BY4k6ASfVSiYmjeQjqCGqbcW8tS8FpHauTYikcRj9Ex7orwGJgjoLqjWJALMc/mnrRkBXQRf83/EYbRP37S4Opz8G90t1Lvq9kmMrsyYjCTn8ccLXwb71WNJkYYZ73Poq1kolPJFR/lQfs+ZULtoCUK4KD/JIlJ/TIaObvm8FuHAoBfDMD9aNgxH70uDBBQrUL52SMKBoZmLx5eZcMpE9aGBmaJy0CP+uTag5WYOETFSiURkR7xNIdwW/X6XyonML5P2eTnYCuv9aYAl8joByU8=
+  app: jmaxwell-fullstack-server
+  on:
+    repo: maxjeffwell/full-stack-capstone-server
