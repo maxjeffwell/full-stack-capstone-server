@@ -11,7 +11,7 @@ export const Signin = function(req, res) {
     // User has had their email and password authorized, give them a token
 
     res.json({ token: userToken(req.user) });
-}
+};
 
 export const Signup = function(req, res, next) {
 
@@ -19,7 +19,7 @@ export const Signup = function(req, res, next) {
     const password = req.body.password;
 
     if (!email || !password) {
-        return res.sendStatus(422).send({ error: 'You must provide an email and password' });
+        return res.status(422).send({ error: 'You must provide an email and password' });
     }
 
     // See if a user with the given email exists
@@ -33,7 +33,7 @@ export const Signup = function(req, res, next) {
         // If email does exist, return an error
 
         if (existingUser) {
-            return res.sendStatus(422)
+            return res.status(422)
                 .send({ error: 'Email already registered' });
         }
 
@@ -56,5 +56,5 @@ export const Signup = function(req, res, next) {
             res.json({ token: userToken(newUser) });
         });
     });
-}
+};
 

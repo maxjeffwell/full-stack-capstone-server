@@ -45,7 +45,7 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 const jwtOptions = { // have to tell JWT strategy where to look on request in order to find this key or secret
     jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
     secretOrKey: process.env.JWT_SECRET,
-}
+};
 
 // Create JWT Strategy
 
