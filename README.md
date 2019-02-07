@@ -12,7 +12,7 @@
 
 [![educationELLy Student List Page](https://i.gyazo.com/56c518f5cadba3482bba048bdd6187a9.png)](https://gyazo.com/56c518f5cadba3482bba048bdd6187a9)
 
-[![educationELLy Update Student Page](https://i.gyazo.com/6d604a8f7fab09b42970e5be7a2f8e90.png)](https://gyazo.com/6d604a8f7fab09b42970e5be7a2f8e90)
+[![educationELLy Update Student Page](https://i.gyazo.com/60b899e1d34962bb2f17127f830dfbf0.png)](https://gyazo.com/60b899e1d34962bb2f17127f830dfbf0)
 
 ## Build Status
 [![npm version](https://img.shields.io/badge/npm%20package-6.4.1-orange.svg)](https://badge.fury.io/js/npm) [![Build Status](https://travis-ci.org/maxjeffwell/full-stack-capstone-server.svg?branch=master)](https://travis-ci.org/maxjeffwell/full-stack-capstone-server) ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://jmaxwell-fullstack-client.herokuapp.com/)
