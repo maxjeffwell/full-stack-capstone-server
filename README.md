@@ -36,7 +36,7 @@ password: demopassword
 
 * API built with Express Server
 * Security
-    * JWT authentication and password hashing with bcrypt.js
+* JWT authentication and password hashing with bcrypt.js
 
 **Data Persistence**
 * MongoDB connected to Express via Mongoose
