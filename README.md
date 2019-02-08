@@ -46,6 +46,16 @@ password: demopassword
 * Heroku
 * mLab
 
+**Relevant source code to key parts of server-side educationELLy**
+
+ * [JWT strategies and Passport Authentication](../master/services/passport.js)
+
+ * [JWT token generation](../master/controllers/authentication.js)
+
+* [Student Mongoose model](../master/models/student.js)
+
+* [User Mongoose model](../master/models/user.js)
+
 ## Meta
 
 by Jeff Maxwell maxjeffwell@gmail.com | [https://github.com/maxjeffwell](https://github.com/maxjeffwell)
