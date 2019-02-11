@@ -1,7 +1,7 @@
 // Using Passport to authenticate a user when they attempt to access a route requiring authentication
 
 // Answer question "is our user logged in?" before they hit the authentication controller
-
+import 'dotenv/config';
 import passport from 'passport';
 import User from'../models/user';
 
