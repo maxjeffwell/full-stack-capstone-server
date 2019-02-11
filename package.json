@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "test": "echo \"no test specified \" && exit 0"
+    "test": "mocha -r esm test --exit"
   },
   "keywords": [],
   "author": "Jeff Maxwell <maxjeffwell@gmail.com>",
@@ -19,6 +19,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/register": "^7.0.0",
     "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -32,6 +33,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
+    "esm": "^3.2.4",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.10",

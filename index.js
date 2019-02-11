@@ -6,7 +6,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import * as path from 'path';
 
-const app = express();
+export const app = express();
 import { Router } from './router';
 
 import mongoose from 'mongoose';

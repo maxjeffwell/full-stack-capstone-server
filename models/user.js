@@ -58,12 +58,12 @@ userSchema.methods.comparePassword = function(candidatePassword, callback) {
 
 // Create the model class (what we're going to use to create new users) - represents all users, not just a particular user
 
-const UserClass = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
 
 // Loads schema into Mongoose and tells it there's a new schema and that it's about a user and it
 // corresponds to a collection named 'user'
 
-export default UserClass;
+export default User;
 
 
 
