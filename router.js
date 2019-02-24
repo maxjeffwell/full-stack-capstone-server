@@ -46,26 +46,39 @@ export const Router = function(app) { // Inside this function we have access to 
             });
     });
 
-//     app.get('/students/:id', requireAuth, function (req, res, next) {
-//     const { id } = req.params;
+    app.post('/students', (req, res) => {
 
-//       if (!mongoose.Types.ObjectId.isValid(id)) {
-//       const err = new Error('The `id` is not valid');
-//       err.status = 400;
-//       return next(err);
-//     }
-//     Student.findOne({ _id: id})
-//     .then(result => {
-//         if (result) {
-//           res.json(result);
-//         } else {
-//           next();
-//         }
-//       })
-//       .catch(err => {
-//         next(err);
-//       });
-//   });
+        let newStudent = {
+            fullName: req.body.fullName,
+            school: req.body.school,
+            teacher: req.body.teacher,
+            gradeLevel: req.body.gradeLevel,
+            ellStatus: req.body.ellStatus,
+            compositeLevel: req.body.compositeLevel,
+            active: req.body.active,
+            designation: req.body.designation
+        };
+        const requiredFields = ['fullName', 'ellStatus', 'designation'];
+        for (let i = 0; i < requiredFields.length; i++) {
+            const field = requiredFields[i];
+            if (!(field in req.body)) {
+                const message = `Missing \`${field}\` in request body`
+                console.error(message);
+                return res.status(400).send(message);
+            }
+        }
+        Student.create(newStudent);
+            Student.find({})
+              .then((result) => {
+                  res.json(result);
+              })
+              .catch((err) => {
+                  res.sendStatus(500).json({
+                      success: false, msg: `Something didn't quite work right.
+                  ${err}`
+                  });
+              })
+    });
 
     app.put('/students/:id/', (req, res) => {
 
@@ -122,6 +135,12 @@ export const Router = function(app) { // Inside this function we have access to 
                     }
                 }
             });
+    });
+
+    app.delete('/students/:id', (req, res) => {
+        Student.findOneAndRemove({_id: req.params.id}).exec();
+        console.log(`Deleted student \`${req.params.id}\``);
+        res.status(204).end();
     });
 };
 

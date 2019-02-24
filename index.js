@@ -36,6 +36,13 @@ app.use(function (req, res, next) {
   next();
 });
 
+// const corsOption = {
+//   "origin": "*",
+//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   "preflightContinue": false,
+//   "optionsSuccessStatus": 204
+// };
+
 app.use(cors());
 
 Router(app);
