@@ -139,7 +139,6 @@ export const Router = function(app) { // Inside this function we have access to 
 
     app.delete('/students/:id', (req, res) => {
         Student.findOneAndRemove({_id: req.params.id}).exec();
-        console.log(`Deleted student \`${req.params.id}\``);
         res.sendStatus(204).end();
     });
 };

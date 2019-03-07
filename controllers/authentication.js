@@ -25,7 +25,6 @@ export const Signup = function(req, res, next) {
     // See if a user with the given email exists
 
     User.findOne({email: email}, function (err, existingUser) { //using callback instead of promise
-        console.log(err, existingUser);
         if (err) {
             return next(err);
         }
