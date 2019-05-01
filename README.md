@@ -2,6 +2,11 @@
 
 > **educationELLy** aims to engage regular classroom teachers in the English language learning process by providing them with quick access to relevant information about the ELL students in their classes. By making ELL student information accessible to mainstream teachers and ELL teachers alike, educationELLy keeps an ELL student's teachers updated on his or her English language proficiency and provides a centralized platform through which all teachers can participate in the feedback process. educationELLy bridges the gap between ELL teachers and regular teachers and facilitates the creation of a more integrated curriculum for English language learners. With educationELLy, all teachers become language teachers.
 
+## Build Status
+[![npm version](https://img.shields.io/badge/npm%20package-6.4.1-orange.svg)](https://badge.fury.io/js/npm) [![Build Status](https://travis-ci.org/maxjeffwell/full-stack-capstone-server.svg?branch=master)](https://travis-ci.org/maxjeffwell/full-stack-capstone-server) ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://jmaxwell-fullstack-client.herokuapp.com/)
+
+## [Live App](https://jmaxwell-fullstack-client.herokuapp.com/)
+
 ## Screenshots
 
 [![educationELLy Desktop Landing Page](https://i.gyazo.com/e98b1d2276640f2cb0a54adee95896c2.png)](https://gyazo.com/e98b1d2276640f2cb0a54adee95896c2)
@@ -29,11 +34,6 @@
 [![educationELLy Mobile Student Card with Header](https://i.gyazo.com/f424c97ceed872696aed619f4b8af006.png)](https://gyazo.com/f424c97ceed872696aed619f4b8af006)
 
 [![educationELLy Mobile Update Student Page](https://i.gyazo.com/53e57d7b52365af84cbeab01ec67e934.png)](https://gyazo.com/53e57d7b52365af84cbeab01ec67e934)
-
-## Build Status
-[![npm version](https://img.shields.io/badge/npm%20package-6.4.1-orange.svg)](https://badge.fury.io/js/npm) [![Build Status](https://travis-ci.org/maxjeffwell/full-stack-capstone-server.svg?branch=master)](https://travis-ci.org/maxjeffwell/full-stack-capstone-server) ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://jmaxwell-fullstack-client.herokuapp.com/)
-
-## [Live App](https://jmaxwell-fullstack-client.herokuapp.com/)
 
 ```
 Demo Account
