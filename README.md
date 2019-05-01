@@ -1,4 +1,4 @@
-<h1 align="center"><font color="#2873b4">educationELLy</font></h1>
+<h1 align="center">educationELLy</h1>
 
 ![NodeJS](https://img.shields.io/badge/Node.js-badge.svg?style=popout&logo=node.js&labelColor=2873b4&logoColor=fb9438&color=86c64e)
 ![MongoDB](https://img.shields.io/badge/MongoDB-badge.svg?style=popout&logo=mongodb&labelColor=2873b4&logoColor=fb9438&color=86c64e)
@@ -9,6 +9,13 @@
 [![npm version](https://img.shields.io/badge/npm%20package-6.4.1-orange.svg?style=popout-square&logo=npm)](https://badge.fury.io/js/npm) [![Build Status](https://img.shields.io/travis/maxjeffwell/full-stack-capstone-server.svg?style=popout-square&logo=travis)](https://travis-ci.org/maxjeffwell/full-stack-capstone-server) ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg?style=popout-square&logo=appveyor) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg?style=popout-square&logo=heroku)](https://jmaxwell-fullstack-server.herokuapp.com/)
 
 ## [Live App](https://jmaxwell-fullstack-client.herokuapp.com/)
+
+```
+Demo Account
+
+username: demo
+password: demopassword
+```
 
 ## Screenshots
 
@@ -38,12 +45,6 @@
 
 [![educationELLy Mobile Update Student Page](https://i.gyazo.com/53e57d7b52365af84cbeab01ec67e934.png)](https://gyazo.com/53e57d7b52365af84cbeab01ec67e934)
 
-```
-Demo Account
-
-username: demo
-password: demopassword
-```
 ## Technology Stack
 **Front End** [Client Github Repo](https://github.com/maxjeffwell/full-stack-capstone-client)
 * React/Redux with extensive use of Redux-Form
@@ -62,11 +63,9 @@ password: demopassword
 
 **Hosting / SaaS / DBaaS / CICD**
 >
-![Github](https://img.shields.io/badge/Github-badge.svg?style=flat&logo=github&labelColor=2873b4&logoColor=fb9438&color=86c64e)
-<br>
-![TravisCI](https://img.shields.io/badge/TravisCI-badge.svg?style=flat&logo=travis-ci&labelColor=2873b4&logoColor=fb9438&color=86c64e)
-<br>
-![Heroku](https://img.shields.io/badge/Heroku-badge.svg?style=flat&logo=heroku&labelColor=2873b4&logoColor=fb9438&color=86c64e)
+* ![Github](https://img.shields.io/badge/Github-badge.svg?style=flat&logo=github&labelColor=2873b4&logoColor=fb9438&color=86c64e)
+* ![TravisCI](https://img.shields.io/badge/TravisCI-badge.svg?style=flat&logo=travis-ci&labelColor=2873b4&logoColor=fb9438&color=86c64e)
+* ![Heroku](https://img.shields.io/badge/Heroku-badge.svg?style=flat&logo=heroku&labelColor=2873b4&logoColor=fb9438&color=86c64e)
 >
 
 **Relevant source code to key parts of server-side educationELLy**
@@ -83,5 +82,5 @@ password: demopassword
 
 by Jeff Maxwell maxjeffwell@gmail.com | [https://github.com/maxjeffwell](https://github.com/maxjeffwell)
 
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square&labelColor=fb9438)](https://www.gnu.org/licenses/gpl-3.0)
 Distributed under the GNU GPLv3 License. See ``LICENSE`` for more information.
