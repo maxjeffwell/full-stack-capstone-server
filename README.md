@@ -74,9 +74,9 @@ password: demopassword
 
  * [JWT token generation](../master/controllers/authentication.js)
 
-* [Student Mongoose model](../master/models/student.js)
+ * [Student Mongoose model](../master/models/student.js)
 
-* [User Mongoose model](../master/models/user.js)
+ * [User Mongoose model](../master/models/user.js)
 
 ## Meta
 
