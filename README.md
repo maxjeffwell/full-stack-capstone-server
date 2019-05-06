@@ -50,7 +50,7 @@ password: demopassword
 * React Styled Components
 * React component testing with Enzyme
 
-**Back End** [API Documentation](https://documenter.getpostman.com/view/4941848/S1Lu29ZF)
+**Back End** [educationELLy API Documentation](https://documenter.getpostman.com/view/4941848/S1Lu29ZF)
 * API built with Express Server
 * Security
   * JWT authentication and password hashing with bcrypt.js
