@@ -1,4 +1,4 @@
-<h1 align="center">educationELLy</h1>
+## educationELLy
 
 ![NodeJS](https://img.shields.io/badge/Node.js-badge.svg?style=popout&logo=node.js&labelColor=2873b4&logoColor=fb9438&color=86c64e)
 ![MongoDB](https://img.shields.io/badge/MongoDB-badge.svg?style=popout&logo=mongodb&labelColor=2873b4&logoColor=fb9438&color=86c64e)
