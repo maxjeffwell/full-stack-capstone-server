@@ -50,18 +50,15 @@ password: demopassword
 * React Styled Components
 * React component testing with Enzyme
 
-**Back End**
-
-[API Documentation](https://documenter.getpostman.com/view/4941848/S1Lu29ZF)
-
+**Back End** [API Documentation](https://documenter.getpostman.com/view/4941848/S1Lu29ZF)
 * API built with Express Server
 * Security
   * JWT authentication and password hashing with bcrypt.js
 
 **Data Persistence**
-* MongoDB connected to Express via Mongoose
+* MongoDB connected to Express via Mongoose and hosted on mLab
 
-**Hosting / SaaS / DBaaS / CICD**
+**Hosting / SaaS / CICD**
 >
 * ![Github](https://img.shields.io/badge/Github-badge.svg?style=flat&logo=github&labelColor=2873b4&logoColor=fb9438&color=86c64e)
 * ![TravisCI](https://img.shields.io/badge/TravisCI-badge.svg?style=flat&logo=travis-ci&labelColor=2873b4&logoColor=fb9438&color=86c64e)
