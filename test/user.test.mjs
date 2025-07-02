@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-import { app } from '../index';
-import User from '../models/user';
+import { app } from '../index.js';
+import User from '../models/user.js';
 
 describe('educationELLy API - Users', () => {
 

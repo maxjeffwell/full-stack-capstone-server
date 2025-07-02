@@ -1,9 +1,9 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
 const expect = chai.expect;
 chai.use(chaiHttp);
 
-import { app } from '../index';
+import { app } from '../index.js';
 
 describe('Reality Check', () => {
 

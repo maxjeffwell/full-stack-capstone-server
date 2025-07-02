@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "engines": {
-    "node": "10.11.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
-    "test": "echo \"Error: no test specified\" && exit 0",
-    "test2": "mocha -r esm test --exit"
+    "test": "dotenv -e .env.test mocha --config .mocharc.json",
+    "test2": "mocha --experimental-modules test/**/*.mjs --exit"
   },
   "repository": {
     "type": "git",
@@ -25,29 +26,31 @@
     "@babel/register": "^7.12.13",
     "chai": "^4.3.0",
     "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^17.0.1",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "mocha": "^6.2.3",
+    "mocha": "^11.7.1",
     "morgan": "^1.10.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^3.1.10"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.16",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
     "nodejs": "0.0.0",
-    "npm-check-updates": "^3.2.2",
-    "passport": "^0.4.1",
+    "npm-check-updates": "^18.0.1",
+    "passport": "^0.7.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "update": "^0.7.4"
+    "update": "^0.4.2"
   },
   "heroku-run-build-script": true
 }

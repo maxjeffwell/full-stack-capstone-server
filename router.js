@@ -1,9 +1,9 @@
-import { Signin, Signup } from './controllers/authentication';
+import { Signin, Signup } from './controllers/authentication.js';
 import passport from 'passport';
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
-import Student from './models/student';
+import Student from './models/student.js';
 
 const requireAuth = passport.authenticate('jwt', { session: false }); // When a user is authenticated don't try to create a session for them (by default, Passport tries to make a cookie-based session for the request - we're using tokens)
 
@@ -46,7 +46,7 @@ export const Router = function(app) { // Inside this function we have access to 
             });
     });
 
-    app.post('/students', (req, res) => {
+    app.post('/students', requireAuth, (req, res) => {
 
         let newStudent = {
             fullName: req.body.fullName,
@@ -58,15 +58,7 @@ export const Router = function(app) { // Inside this function we have access to 
             active: req.body.active,
             designation: req.body.designation
         };
-        const requiredFields = ['fullName', 'ellStatus', 'designation'];
-        for (let i = 0; i < requiredFields.length; i++) {
-            const field = requiredFields[i];
-            if (!(field in req.body)) {
-                const message = `Missing \`${field}\` in request body`
-                console.error(message);
-                return res.status(400).send(message);
-            }
-        }
+        const requiredFields = ['fullName', 'ellStatus', 'designation'];        for (let i = 0; i < requiredFields.length; i++) {            const field = requiredFields[i];            if (!(field in req.body) || req.body[field] === '') {                const message = `Missing or empty `${field}` in request body`                console.error(message);                return res.status(400).send(message);            }        }
         Student.create(newStudent);
             Student.find({})
               .then((result) => {
@@ -80,7 +72,7 @@ export const Router = function(app) { // Inside this function we have access to 
               })
     });
 
-    app.put('/students/:id/', (req, res) => {
+    app.put('/students/:id/', requireAuth, (req, res) => {
 
         let updatedStudent = {
             fullName: req.body.fullName,
@@ -92,6 +84,16 @@ export const Router = function(app) { // Inside this function we have access to 
             active: req.body.active,
             designation: req.body.designation
         };
+
+        const requiredFields = ['fullName', 'ellStatus', 'designation'];
+        for (let i = 0; i < requiredFields.length; i++) {
+            const field = requiredFields[i];
+            if (!(field in req.body) || req.body[field] === '') {
+                const message = `Missing or empty `${field}` in request body`
+                console.error(message);
+                return res.status(400).send(message);
+            }
+        }
 
         Student.findOneAndUpdate({_id: req.params.id}, updatedStudent)
             .then((oldResult) => {
@@ -116,28 +118,12 @@ export const Router = function(app) { // Inside this function we have access to 
                         res.sendStatus(500).json({success: false});
                     });
             }).catch((err) => {
-                if (err.errors) {
-                    if (err.errors.school) {
-                        res.sendStatus(400).json({success: false, msg: err.errors.school.message});
-                        return;
-                    }
-                    if (err.errors.teacher) {
-                        res.sendStatus(400).json({success: false, msg: err.errors.teacher.message});
-                        return;
-                    }
-                    if (err.errors.gradeLevel) {
-                        res.sendStatus(400).json({success: false, msg: err.errors.gradeLevel.message});
-                        return;
-                    }
-                    if (err.errors.ellStatus) {
-                        res.sendStatus(400).json({success: false, msg: err.errors.ellStatus.message});
-
-                    }
-                }
+                console.error(err);
+                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
             });
     });
 
-    app.delete('/students/:id', (req, res) => {
+    app.delete('/students/:id', requireAuth, (req, res) => {
         Student.findOneAndRemove({_id: req.params.id}).exec();
         res.sendStatus(204).end();
     });

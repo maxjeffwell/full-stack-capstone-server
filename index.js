@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import 'dotenv/config.js';
 import cors from 'cors';
 import morgan from 'morgan';
 import http from 'http';
@@ -7,18 +7,18 @@ import bodyParser from 'body-parser';
 import * as path from 'path';
 
 export const app = express();
-import { Router } from './router';
+import { Router } from './router.js';
 
 import mongoose from 'mongoose';
-import './services/passport';
-import './models/student';
-import './models/user';
+import './services/passport.js';
+import './models/student.js';
+import './models/user.js';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/local', {
     useNewUrlParser: true
 });
-mongoose.set('useCreateIndex', true);
+
 
 // App setup to get Express working
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
@@ -43,6 +43,7 @@ Router(app);
 // Create a static server
 
 // production build creates /build directory and we need to tell Express to use it
+
 
 // Server setup to get Express app to talk to the outside world
 

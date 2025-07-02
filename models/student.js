@@ -22,7 +22,7 @@ const studentSchema = new Schema ({
     designation: String
 });
 
-const StudentClass = mongoose.model('student', studentSchema);
+const StudentClass = mongoose.models.student || mongoose.model('student', studentSchema);
 
 export default StudentClass;
 

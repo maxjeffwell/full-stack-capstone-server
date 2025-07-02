@@ -2,7 +2,7 @@
 
 // Answer question "is our user logged in?" before they hit the authentication controller
 import passport from 'passport';
-import User from'../models/user';
+import User from'../models/user.js';
 
 // import JwtStrategy from'passport-jwt'; // this strategy validates a user with a JWT
 
