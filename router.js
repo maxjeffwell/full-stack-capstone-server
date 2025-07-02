@@ -1,9 +1,30 @@
-import { Signin, Signup } from './controllers/authentication.js';
+import { Signin, Signup, validateSignup } from './controllers/authentication.js';
 import passport from 'passport';
+import { body, validationResult } from 'express-validator';
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
 import Student from './models/student.js';
+
+const handleValidationErrors = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ 
+      error: 'Validation failed', 
+      details: errors.array().map(err => ({ field: err.path, message: err.msg }))
+    });
+  }
+  next();
+};
+
+const handleServerError = (res, err, message = 'Internal server error') => {
+  console.error(err);
+  if (process.env.NODE_ENV === 'production') {
+    res.status(500).json({ error: message });
+  } else {
+    res.status(500).json({ error: message, details: err.message });
+  }
+};
 
 const requireAuth = passport.authenticate('jwt', { session: false }); // When a user is authenticated don't try to create a session for them (by default, Passport tries to make a cookie-based session for the request - we're using tokens)
 
@@ -17,7 +38,7 @@ export const Router = function(app) { // Inside this function we have access to 
 
     app.post('/signin', requireSignin, Signin);
 
-    app.post('/signup', Signup);
+    app.post('/signup', validateSignup, handleValidationErrors, Signup);
 
     app.get('/logout', (req, res) => {
         req.logout();
@@ -32,23 +53,32 @@ export const Router = function(app) { // Inside this function we have access to 
                 res.json(result);
             })
             .catch((err) => {
-                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                handleServerError(res, err, 'Failed to retrieve students');
             });
     });
 
     app.get('/students/:id', requireAuth, function (req, res) {
         Student.findById(req.params.id)
             .then((result) => {
+                if (!result) {
+                    return res.status(404).json({ error: 'Student not found' });
+                }
                 res.json(result);
             })
             .catch((err) => {
-                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+                handleServerError(res, err, 'Failed to retrieve student');
             });
     });
 
-    app.post('/students', requireAuth, (req, res) => {
-
-        let newStudent = {
+    app.post('/students', requireAuth, [
+        body('fullName').trim().isLength({ min: 1 }).withMessage('Full name is required'),
+        body('ellStatus').trim().isLength({ min: 1 }).withMessage('ELL status is required'),
+        body('designation').trim().isLength({ min: 1 }).withMessage('Designation is required'),
+        body('gradeLevel').optional().isInt({ min: 1, max: 12 }).withMessage('Grade level must be between 1 and 12'),
+        body('school').optional().trim().escape(),
+        body('teacher').optional().trim().escape()
+    ], handleValidationErrors, (req, res) => {
+        const newStudent = {
             fullName: req.body.fullName,
             school: req.body.school,
             teacher: req.body.teacher,
@@ -58,23 +88,26 @@ export const Router = function(app) { // Inside this function we have access to 
             active: req.body.active,
             designation: req.body.designation
         };
-        const requiredFields = ['fullName', 'ellStatus', 'designation'];        for (let i = 0; i < requiredFields.length; i++) {            const field = requiredFields[i];            if (!(field in req.body) || req.body[field] === '') {                const message = `Missing or empty `${field}` in request body`                console.error(message);                return res.status(400).send(message);            }        }
-        Student.create(newStudent);
-            Student.find({})
-              .then((result) => {
-                  res.json(result);
-              })
-              .catch((err) => {
-                  res.sendStatus(500).json({
-                      success: false, msg: `Something didn't quite work right.
-                  ${err}`
-                  });
-              })
+        
+        Student.create(newStudent)
+            .then(() => Student.find({}))
+            .then((result) => {
+                res.json(result);
+            })
+            .catch((err) => {
+                handleServerError(res, err, 'Failed to create student');
+            });
     });
 
-    app.put('/students/:id/', requireAuth, (req, res) => {
-
-        let updatedStudent = {
+    app.put('/students/:id/', requireAuth, [
+        body('fullName').trim().isLength({ min: 1 }).withMessage('Full name is required'),
+        body('ellStatus').trim().isLength({ min: 1 }).withMessage('ELL status is required'),
+        body('designation').trim().isLength({ min: 1 }).withMessage('Designation is required'),
+        body('gradeLevel').optional().isInt({ min: 1, max: 12 }).withMessage('Grade level must be between 1 and 12'),
+        body('school').optional().trim().escape(),
+        body('teacher').optional().trim().escape()
+    ], handleValidationErrors, (req, res) => {
+        const updatedStudent = {
             fullName: req.body.fullName,
             school: req.body.school,
             teacher: req.body.teacher,
@@ -85,47 +118,33 @@ export const Router = function(app) { // Inside this function we have access to 
             designation: req.body.designation
         };
 
-        const requiredFields = ['fullName', 'ellStatus', 'designation'];
-        for (let i = 0; i < requiredFields.length; i++) {
-            const field = requiredFields[i];
-            if (!(field in req.body) || req.body[field] === '') {
-                const message = `Missing or empty `${field}` in request body`
-                console.error(message);
-                return res.status(400).send(message);
-            }
-        }
-
-        Student.findOneAndUpdate({_id: req.params.id}, updatedStudent)
-            .then((oldResult) => {
-                Student.findOne({_id: req.params.id})
-                    .then((newResult) => {
-                        res.json({
-                            success: true,
-                            msg: `Updated successfully`,
-                            result: {
-                                fullName: newResult.fullName,
-                                school: newResult.school,
-                                teacher: newResult.teacher,
-                                gradeLevel: newResult.gradeLevel,
-                                ellStatus: newResult.ellStatus,
-                                compositeLevel: newResult.compositeLevel,
-                                active: newResult.active,
-                                designation: newResult.designation
-                            }
-                        });
-                    }).catch((err) => {
-                        console.error(err);
-                        res.sendStatus(500).json({success: false});
-                    });
-            }).catch((err) => {
-                console.error(err);
-                res.sendStatus(500).json({success: false, msg: `Something didn't quite work right. ${err}`});
+        Student.findOneAndUpdate({_id: req.params.id}, updatedStudent, { new: true })
+            .then((result) => {
+                if (!result) {
+                    return res.status(404).json({ error: 'Student not found' });
+                }
+                res.json({
+                    success: true,
+                    message: 'Updated successfully',
+                    result: result
+                });
+            })
+            .catch((err) => {
+                handleServerError(res, err, 'Failed to update student');
             });
     });
 
     app.delete('/students/:id', requireAuth, (req, res) => {
-        Student.findOneAndRemove({_id: req.params.id}).exec();
-        res.sendStatus(204).end();
+        Student.findOneAndRemove({_id: req.params.id})
+            .then((result) => {
+                if (!result) {
+                    return res.status(404).json({ error: 'Student not found' });
+                }
+                res.status(204).end();
+            })
+            .catch((err) => {
+                handleServerError(res, err, 'Failed to delete student');
+            });
     });
 };
 

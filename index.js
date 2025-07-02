@@ -5,6 +5,8 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as path from 'path';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 export const app = express();
 import { Router } from './router.js';
@@ -23,20 +25,42 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/local', {
 // App setup to get Express working
 // Morgan and bodyParser are Express middleware (any incoming request will be passed into them by default)
 
+app.use(helmet());
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
 
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(204);
-  }
-  next();
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests from this IP, please try again later.'
 });
+app.use('/signin', rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'Too many login attempts, please try again later.'
+}));
+app.use('/signup', rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 3,
+  message: 'Too many registration attempts, please try again later.'
+}));
+app.use(limiter);
 
-app.use(cors());
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+}));
 
 Router(app);
 

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/user.js';
+import { body, validationResult } from 'express-validator';
 
 function userToken(user) {
     const timestamp = new Date ().getTime();
@@ -13,14 +14,22 @@ export const Signin = function(req, res) {
     res.json({ token: userToken(req.user) });
 };
 
+export const validateSignup = [
+    body('email').isEmail().normalizeEmail().withMessage('Please provide a valid email'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+];
+
 export const Signup = function(req, res, next) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ 
+            error: 'Validation failed', 
+            details: errors.array().map(err => ({ field: err.path, message: err.msg }))
+        });
+    }
 
     const email = req.body.email;
     const password = req.body.password;
-
-    if (!email || !password) {
-        return res.status(422).send({ error: 'You must provide an email and password' });
-    }
 
     // See if a user with the given email exists
 
