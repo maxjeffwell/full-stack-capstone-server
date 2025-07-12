@@ -1,9 +1,8 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
+import * as chai from 'chai';
+import request from 'supertest';
 const expect = chai.expect;
-chai.use(chaiHttp);
 
-import { app } from '../index.js';
+import app from '../index.js';
 
 describe('Reality Check', () => {
 
@@ -21,10 +20,10 @@ describe('Basic Express setup', () => {
   describe('404 handler', () => {
 
     it('should respond with 404 when given a bad path', () => {
-      return chai.request(app)
+      return request(app)
         .get('/bad/path')
         .then(res => {
-          expect(res).to.have.status(404);
+          expect(res.status).to.equal(404);
         });
     });
   });

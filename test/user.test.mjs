@@ -1,19 +1,18 @@
 import mongoose from 'mongoose';
 import chai from 'chai';
-import chaiHttp from 'chai-http';
+import request from 'supertest';
 const expect = chai.expect;
-chai.use(chaiHttp);
 
-import { app } from '../index.js';
+import app from '../index.js';
 import User from '../models/user.js';
 
 describe('educationELLy API - Users', () => {
 
-  const email = 'exampleUser';
+  const email = 'example@example.com';
   const password = 'examplePass';
 
   before(function() {
-    return mongoose.connect(process.env.TEST_MONGODB_URI)
+    return mongoose.connect(process.env.TEST_MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
@@ -35,13 +34,12 @@ describe('educationELLy API - Users', () => {
         const testUser = { email, password };
 
         let res;
-        return chai
-          .request(app)
+        return request(app)
           .post('/signup')
           .send(testUser)
           .then(_res => {
             res = _res;
-            expect(res).to.have.status(200);
+            expect(res.status).to.equal(200);
             expect(res.body).to.be.an('object');
             expect(res.body).to.have.keys('token');
           })
@@ -49,4 +47,3 @@ describe('educationELLy API - Users', () => {
     });
   });
 });
-
