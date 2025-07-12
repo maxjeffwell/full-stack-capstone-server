@@ -1,6 +1,7 @@
 import passport from 'passport';
-import { body, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { Signin, Signup, validateSignup } from './controllers/authentication.js';
+import { studentValidationRules, mongoIdValidation } from './middleware/validation.js';
 
 // Create an object and insert it between our incoming request and our route handler (i.e. Passport middleware - requireAuth)
 
@@ -53,7 +54,7 @@ const Router = (app) => { // Inside this function we have access to our Express 
       .catch((err) => handleServerError(res, err, 'Failed to retrieve students'));
   });
 
-  app.get('/students/:id', requireAuth, (req, res) => {
+  app.get('/students/:id', requireAuth, mongoIdValidation, handleValidationErrors, (req, res) => {
     Student.findById(req.params.id)
       .then((result) => {
         if (!result) {
@@ -64,14 +65,7 @@ const Router = (app) => { // Inside this function we have access to our Express 
       .catch((err) => handleServerError(res, err, 'Failed to retrieve student'));
   });
 
-  app.post('/students', requireAuth, [
-    body('fullName').trim().isLength({ min: 1 }).withMessage('Full name is required'),
-    body('ellStatus').trim().isLength({ min: 1 }).withMessage('ELL status is required'),
-    body('designation').trim().isLength({ min: 1 }).withMessage('Designation is required'),
-    body('gradeLevel').optional().isInt({ min: 1, max: 12 }).withMessage('Grade level must be between 1 and 12'),
-    body('school').optional().trim().escape(),
-    body('teacher').optional().trim().escape(),
-  ], handleValidationErrors, (req, res) => {
+  app.post('/students', requireAuth, studentValidationRules, handleValidationErrors, (req, res) => {
     const newStudent = {
       fullName: req.body.fullName,
       school: req.body.school,
@@ -89,14 +83,7 @@ const Router = (app) => { // Inside this function we have access to our Express 
       .catch((err) => handleServerError(res, err, 'Failed to create student'));
   });
 
-  app.put('/students/:id/', requireAuth, [
-    body('fullName').trim().isLength({ min: 1 }).withMessage('Full name is required'),
-    body('ellStatus').trim().isLength({ min: 1 }).withMessage('ELL status is required'),
-    body('designation').trim().isLength({ min: 1 }).withMessage('Designation is required'),
-    body('gradeLevel').optional().isInt({ min: 1, max: 12 }).withMessage('Grade level must be between 1 and 12'),
-    body('school').optional().trim().escape(),
-    body('teacher').optional().trim().escape(),
-  ], handleValidationErrors, (req, res) => {
+  app.put('/students/:id/', requireAuth, mongoIdValidation, studentValidationRules, handleValidationErrors, (req, res) => {
     const updatedStudent = {
       fullName: req.body.fullName,
       school: req.body.school,
@@ -122,8 +109,8 @@ const Router = (app) => { // Inside this function we have access to our Express 
       .catch((err) => handleServerError(res, err, 'Failed to update student'));
   });
 
-  app.delete('/students/:id', requireAuth, (req, res) => {
-    Student.findOneAndRemove({ _id: req.params.id })
+  app.delete('/students/:id', requireAuth, mongoIdValidation, handleValidationErrors, (req, res) => {
+    Student.findOneAndDelete({ _id: req.params.id })
       .then((result) => {
         if (!result) {
           return res.status(404).json({ error: 'Student not found' });

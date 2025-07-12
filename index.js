@@ -9,18 +9,22 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
 import Router from './router.js';
+import validateEnvironment from './utils/envValidation.js';
 
 import './services/passport.js';
 import './models/student.js';
 import './models/user.js';
 
+// Validate environment variables
+if (process.env.NODE_ENV !== 'test') {
+  validateEnvironment();
+}
+
 const app = express();
 
 if (process.env.NODE_ENV !== 'test') {
   mongoose.Promise = global.Promise;
-  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/local', {
-    useNewUrlParser: true,
-  });
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/local');
 }
 
 // App setup to get Express working

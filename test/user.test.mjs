@@ -9,10 +9,10 @@ import User from '../models/user.js';
 describe('educationELLy API - Users', () => {
 
   const email = 'example@example.com';
-  const password = 'examplePass';
+  const password = 'ExamplePass123';
 
   before(function() {
-    return mongoose.connect(process.env.TEST_MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    return mongoose.connect(process.env.TEST_MONGODB_URI)
       .then(() => mongoose.connection.db.dropDatabase());
   });
 

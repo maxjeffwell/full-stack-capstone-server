@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/npm.git"
+    "url": "https://github.com/maxjeffwell/full-stack-capstone-server.git"
   },
   "keywords": [],
   "author": "Jeff Maxwell <maxjeffwell@gmail.com>",
