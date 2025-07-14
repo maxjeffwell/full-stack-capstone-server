@@ -41,7 +41,7 @@ const limiter = rateLimit({
 });
 app.use('/signin', rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: 50, // Increased for development
   message: 'Too many login attempts, please try again later.',
 }));
 app.use('/signup', rateLimit({
@@ -65,6 +65,8 @@ app.use(cors({
   },
   credentials: true,
   optionsSuccessStatus: 200,
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 
 Router(app);

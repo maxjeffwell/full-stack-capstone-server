@@ -17,7 +17,7 @@ const seedDatabase = async () => {
     // Create sample users
     // Note: Password will be hashed automatically by the User model's pre-save hook
 
-    const users = await User.create([
+    const usersData = [
       {
         email: 'teacher1@example.com',
         password: 'password123',
@@ -30,7 +30,14 @@ const seedDatabase = async () => {
         email: 'admin@example.com',
         password: 'password123',
       },
-    ]);
+    ];
+
+    const users = [];
+    for (const userData of usersData) {
+      const user = new User(userData);
+      await user.save();
+      users.push(user);
+    }
     console.log(`Created ${users.length} users`);
 
     // Create sample students

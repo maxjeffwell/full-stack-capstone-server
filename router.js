@@ -48,6 +48,15 @@ const Router = (app) => { // Inside this function we have access to our Express 
 
   app.get('/whoami', requireAuth, (req, res) => res.json(req.user));
 
+  app.get('/test-auth', requireAuth, (req, res) => {
+    console.log('GET /test-auth - User authenticated:', req.user?.email);
+    res.json({ 
+      message: 'Authentication working', 
+      user: req.user?.email,
+      timestamp: new Date().toISOString()
+    });
+  });
+
   app.get('/students', requireAuth, (req, res) => {
     Student.find({})
       .then((result) => res.json(result))
