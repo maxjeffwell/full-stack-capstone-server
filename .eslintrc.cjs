@@ -3,6 +3,14 @@ module.exports = {
   "plugins": [
     "import"
   ],
+  "overrides": [
+    {
+      "files": ["test/**/*.js", "test/**/*.mjs"],
+      "env": {
+        "mocha": true
+      }
+    }
+  ],
   "rules": {
     "import/extensions": ["off"],
     "import/no-extraneous-dependencies": ["error", {

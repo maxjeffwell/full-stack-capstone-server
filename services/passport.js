@@ -12,21 +12,20 @@ import User from '../models/user.js';
 // Create local strategy
 
 const localOptions = { usernameField: 'email' };
-const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
+const localLogin = new LocalStrategy(localOptions, async (email, password, done) => {
   // Verify username and password, call done with the user if it is the correct username and password
   // otherwise call done with false
 
-  User.findOne({ email }, (err, user) => {
-    if (err) {
-      return done(err);
-    }
+  try {
+    const user = await User.findOne({ email });
+
     if (!user) {
       return done(null, false);
     }
     // compare passwords - is `password` === user.password ?
     // have to compare a plaintext password with an encrypted password
 
-    user.comparePassword(password, (compareErr, isMatch) => {
+    return user.comparePassword(password, (compareErr, isMatch) => {
       if (compareErr) {
         return done(compareErr);
       }
@@ -35,8 +34,9 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
       }
       return done(null, user);
     });
-    return null; // Explicitly return null for this path
-  });
+  } catch (err) {
+    return done(err);
+  }
 });
 
 // Set up options for JWT Strategy
@@ -48,7 +48,7 @@ const jwtOptions = { // have to tell JWT strategy where to look on request in or
 
 // Create JWT Strategy
 
-const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
+const jwtLogin = new Strategy(jwtOptions, async (payload, done) => {
   // When we get the payload back it is going to be the user Id and timestamp that was encoded when we created userToken
   // (will have subject property and issuedAt property)
 
@@ -56,10 +56,9 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
 
   // See if the user ID in the payload exists in the database. If it does, call 'done'. Otherwise, call 'done' without a user object
 
-  User.findById(payload.sub, (err, user) => {
-    if (err) {
-      return done(err, false); // search failed to occur
-    }
+  try {
+    const user = await User.findById(payload.sub);
+
     if (user) {
       // eslint-disable-next-line no-param-reassign
       delete user.password;
@@ -67,7 +66,9 @@ const jwtLogin = new Strategy(jwtOptions, (payload, done) => {
       return done(null, user); // search occurred and found a user
     }
     return done(null, false); // search occurred but we couldn't find a user (person is not authenticated)
-  });
+  } catch (err) {
+    return done(err, false); // search failed to occur
+  }
 });
 
 // Tell Passport to use the Strategy

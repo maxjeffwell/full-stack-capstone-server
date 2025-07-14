@@ -7,15 +7,14 @@ function userToken(user) {
   return jwt.sign({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET);
 }
 
-export const Signin = (req, res) => {
+export const Signin = (req, res) =>
   // User has had their email and password authorized, give them a token
-  return res.json({ token: userToken(req.user) });
-};
-
+  res.json({ token: userToken(req.user) });
 export const validateSignup = [
   body('email').isEmail().normalizeEmail().withMessage('Please provide a valid email'),
   body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/).withMessage('Password must contain at least one lowercase letter, one uppercase letter, and one number'),
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
+    .withMessage('Password must contain at least one lowercase letter, one uppercase letter, and one number'),
 ];
 
 export const Signup = async (req, res, next) => {

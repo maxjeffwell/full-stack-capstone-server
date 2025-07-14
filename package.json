@@ -10,7 +10,9 @@
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
     "test": "NODE_ENV=test dotenv -e .env.test mocha --config .mocharc.json",
-    "test2": "mocha --experimental-modules test/**/*.mjs --exit"
+    "test2": "mocha --experimental-modules test/**/*.mjs --exit",
+    "seed": "node scripts/seed.js",
+    "db:reset": "node scripts/seed.js"
   },
   "repository": {
     "type": "git",
