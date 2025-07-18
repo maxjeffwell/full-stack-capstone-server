@@ -99,7 +99,7 @@ const Router = (app) => { // Inside this function we have access to our Express 
       .catch((err) => handleServerError(res, err, 'Failed to create student'));
   });
 
-  app.put('/students/:id/', requireAuth, mongoIdValidation, studentValidationRules, handleValidationErrors, (req, res) => {
+  app.put('/students/:id', requireAuth, mongoIdValidation, studentValidationRules, handleValidationErrors, (req, res) => {
     const updatedStudent = {
       fullName: req.body.fullName,
       school: req.body.school,
