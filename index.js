@@ -58,7 +58,7 @@ app.use(limiter);
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
-  : ['http://localhost:3000', 'http://localhost:3001'];
+  : ['http://localhost:3000', 'http://localhost:3001', 'https://educationelly-client-71a1b1901aaa.herokuapp.com'];
 
 app.use(cors({
   origin(origin, callback) {
