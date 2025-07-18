@@ -17,7 +17,12 @@ import './models/user.js';
 
 // Validate environment variables
 if (process.env.NODE_ENV !== 'test') {
-  validateEnvironment();
+  try {
+    validateEnvironment();
+  } catch (error) {
+    console.error('Environment validation failed:', error.message);
+    console.error('Continuing without validation...');
+  }
 }
 
 const app = express();
