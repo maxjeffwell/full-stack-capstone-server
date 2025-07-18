@@ -5,11 +5,15 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as path from 'path';
+import { fileURLToPath } from 'url';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
 import Router from './router.js';
 import validateEnvironment from './utils/envValidation.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 import './services/passport.js';
 import './models/student.js';
@@ -26,6 +30,11 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 const app = express();
+
+// Trust proxy for Heroku
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
 if (process.env.NODE_ENV !== 'test') {
   mongoose.Promise = global.Promise;
