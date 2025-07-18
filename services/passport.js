@@ -44,6 +44,8 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
 const jwtOptions = { // have to tell JWT strategy where to look on request in order to find this key or secret
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
   secretOrKey: process.env.JWT_SECRET,
+  ignoreExpiration: false, // Explicitly reject expired tokens
+  passReqToCallback: false,
 };
 
 // Create JWT Strategy

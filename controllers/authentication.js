@@ -4,7 +4,14 @@ import User from '../models/user.js';
 
 function userToken(user) {
   const timestamp = new Date().getTime();
-  return jwt.sign({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET);
+  return jwt.sign(
+    { 
+      sub: user.id, 
+      iat: timestamp,
+      exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 7 days expiration
+    }, 
+    process.env.JWT_SECRET
+  );
 }
 
 export const Signin = (req, res) =>
