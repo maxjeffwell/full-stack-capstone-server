@@ -30,13 +30,11 @@
     "chai": "^5.2.1",
     "chai-http": "^5.1.2",
     "cross-env": "^7.0.3",
-    "dotenv": "^17.2.0",
     "dotenv-cli": "^8.0.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.32.0",
     "mocha": "^11.7.1",
-    "morgan": "^1.10.0",
     "nodemon": "^3.1.10"
   },
   "dependencies": {
@@ -52,7 +50,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.3",
     "morgan": "^1.10.0",
-    "nodejs": "0.0.0",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
