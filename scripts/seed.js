@@ -19,6 +19,10 @@ const seedDatabase = async () => {
 
     const usersData = [
       {
+        email: 'demo@example.com',
+        password: 'demopassword',
+      },
+      {
         email: 'teacher1@example.com',
         password: 'password123',
       },
@@ -217,6 +221,7 @@ const seedDatabase = async () => {
 
     console.log('\nDatabase seeded successfully!');
     console.log('\nSample login credentials:');
+    console.log('Email: demo@example.com, Password: demopassword');
     console.log('Email: teacher1@example.com, Password: password123');
     console.log('Email: teacher2@example.com, Password: password123');
     console.log('Email: admin@example.com, Password: password123');
