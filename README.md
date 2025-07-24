@@ -26,8 +26,8 @@ The platform bridges the gap between ELL specialists and mainstream classroom te
 To explore the application, you can use the following demo credentials:
 
 ```
-Email: demo@educationelly.com
-Password: demopass123
+Email: demo@example.com
+Password: demopassword
 ```
 
 ## Getting Started
@@ -265,7 +265,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 **Jeff Maxwell**
 - Email: [maxjeffwell@gmail.com](mailto:maxjeffwell@gmail.com)
 - GitHub: [@maxjeffwell](https://github.com/maxjeffwell)
-- Portfolio: [el-jefe.me](https://www.el-jefe.me)
+- Portfolio: [https://www.el-jefe.me](https://www.el-jefe.me)
 
 ## Acknowledgments
 
