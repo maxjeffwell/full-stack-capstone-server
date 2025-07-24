@@ -146,6 +146,20 @@ educationELLy-server/
 └── Procfile                # Heroku deployment
 ```
 
+## Authentication & Security
+
+### JWT Authentication Strategy
+
+The server implements a stateless JWT (JSON Web Token) authentication system using Passport.js:
+
+- **Token Generation**: JWTs are created upon successful login/signup containing user ID and timestamp
+- **Token Expiration**: Tokens expire after 7 days for security
+- **Token Validation**: Every protected route validates the JWT from the Authorization header
+- **Stateless Design**: No server-side session storage - tokens contain all necessary auth information
+- **Bearer Token Format**: Clients must send tokens as `Authorization: Bearer <token>`
+
+The JWT strategy extracts tokens from request headers, verifies signatures using the `JWT_SECRET`, and validates token expiration. Invalid or expired tokens are automatically rejected.
+
 ## Technologies
 
 ### Core
