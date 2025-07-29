@@ -34,6 +34,10 @@ const seedDatabase = async () => {
         email: 'admin@example.com',
         password: 'password123',
       },
+      {
+        email: 'demo2@example.com',
+        password: 'demopassword',
+      }
     ];
 
     const users = [];
@@ -217,6 +221,7 @@ const seedDatabase = async () => {
         designation: 'General Education',
       },
     ]);
+
     console.log(`Created ${students.length} students`);
 
     console.log('\nDatabase seeded successfully!');
@@ -232,5 +237,4 @@ const seedDatabase = async () => {
     process.exit(1);
   }
 };
-
 seedDatabase();

@@ -69,19 +69,27 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : ['http://localhost:3000', 'http://localhost:3001', 'https://educationelly-client-71a1b1901aaa.herokuapp.com'];
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  optionsSuccessStatus: 200,
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-}));
+// Allow all origins in development
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: true, // or '*' for all origins
+    credentials: true
+  }));
+} else {
+  app.use(cors({
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  }));
+}
 
 Router(app);
 
